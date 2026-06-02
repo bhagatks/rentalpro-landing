@@ -3,51 +3,317 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RentalPro.ai — Automated Property Management & Listings</title>
+    <title>RentalPro.ai | Intelligent Property Automation</title>
     <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background-color: #0B0F19;
-            color: #FFFFFF;
+        :root {
+            --bg-color: #FAFAFB;
+            --card-bg: #FFFFFF;
+            --text-main: #0F172A;
+            --text-muted: #475569;
+            --primary: #2563EB; /* Clean Indigo Blue */
+            --secondary: #0D9488; /* Aquamarine Teal */
+            --border-color: #E2E8F0;
+        }
+
+        * {
+            box-sizing: border-box;
             margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+
+        /* Navigation Bar */
+        nav {
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
-            height: 100vh;
-            text-align: center;
+            padding: 20px 8%;
+            border-bottom: 1px solid var(--border-color);
+            background: rgba(250, 250, 251, 0.8);
+            backdrop-filter: blur(12px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
         }
-        .container {
-            max-width: 600px;
-            padding: 20px;
-        }
-        h1 {
-            font-size: 3rem;
-            margin-bottom: 10px;
-            background: linear-gradient(45deg, #00D2FF, #00E676);
+
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        p {
-            color: #9QT;
+
+        .nav-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn-portal {
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            padding: 10px 20px;
+            border-radius: 20px;
+            transition: all 0.2s;
+        }
+
+        .btn-owner {
+            background-color: var(--primary);
+            color: #FFFFFF;
+            border: 1px solid var(--primary);
+        }
+
+        .btn-owner:hover {
+            background-color: #1D4ED8;
+            border-color: #1D4ED8;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+        }
+
+        .btn-tenant {
+            background-color: transparent;
+            color: var(--secondary);
+            border: 1px solid var(--secondary);
+        }
+
+        .btn-tenant:hover {
+            background-color: rgba(13, 148, 136, 0.05);
+            box-shadow: 0 4px 12px rgba(13, 148, 136, 0.1);
+        }
+
+        /* Hero Section */
+        header {
+            padding: 180px 8% 80px 8%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            min-height: 75vh;
+            justify-content: center;
+            background: radial-gradient(circle at 50% 30%, rgba(37, 99, 235, 0.04), transparent 60%);
+        }
+
+        header h1 {
+            font-size: 3.4rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            line-height: 1.2;
+            max-width: 850px;
+            color: var(--text-main);
+            margin-bottom: 16px;
+        }
+
+        header p {
+            color: var(--text-muted);
             font-size: 1.2rem;
+            max-width: 680px;
+            margin-bottom: 40px;
+        }
+
+        /* Zip Code Search Bar */
+        .search-container {
+            background: #FFFFFF;
+            border: 1px solid var(--border-color);
+            padding: 6px 6px 6px 18px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 10px 25px rgba(15, 23, 42, 0.05);
+            margin-bottom: 40px;
+            transition: box-shadow 0.2s, border-color 0.2s;
+        }
+
+        .search-container:focus-within {
+            border-color: var(--primary);
+            box-shadow: 0 10px 30px rgba(37, 99, 235, 0.08);
+        }
+
+        .search-icon {
+            color: #94A3B8;
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+
+        .search-container input {
+            background: transparent;
+            border: none;
+            outline: none;
+            color: var(--text-main);
+            padding: 10px 0;
+            font-size: 1rem;
+            flex-grow: 1;
+            width: 100%;
+        }
+
+        .search-container input::placeholder {
+            color: #94A3B8;
+        }
+
+        .search-container button {
+            background: linear-gradient(45deg, var(--primary), #3B82F6);
+            border: none;
+            color: white;
+            padding: 10px 24px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .search-container button:hover {
+            opacity: 0.95;
+        }
+
+        /* 3-Pillar Modules Grid */
+        .features {
+            padding: 60px 8% 120px 8%;
+            background: #FFFFFF;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 60px;
+            letter-spacing: -0.5px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 32px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 48px 36px;
+            border-radius: 16px;
+            text-align: center;
+            transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(37, 99, 235, 0.3);
+            box-shadow: 0 12px 30px rgba(15, 23, 42, 0.04);
+        }
+
+        .card-icon {
+            font-size: 2.2rem;
+            margin-bottom: 24px;
+            display: inline-block;
+        }
+
+        .card h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+            color: var(--text-main);
+        }
+
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
             line-height: 1.6;
         }
-        .badge {
-            background-color: rgba(0, 210, 255, 0.1);
-            color: #00D2FF;
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-weight: bold;
-            font-size: 0.9rem;
-            text-transform: uppercase;
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: #94A3B8;
+            font-size: 0.85rem;
+            background-color: var(--bg-color);
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            nav { padding: 16px 5%; }
+            .logo { font-size: 1.3rem; }
+            .btn-portal { padding: 8px 14px; font-size: 0.8rem; }
+            header { padding-top: 140px; }
+            header h1 { font-size: 2.2rem; }
+            .search-container { border-radius: 24px; padding: 6px 6px 6px 14px; }
+            .search-container button { padding: 8px 16px; font-size: 0.85rem; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <span class="badge">Coming Soon</span>
-        <h1>RentalPro.ai</h1>
-        <p>The intelligent rental operating system matching premium DFW listings with verified tenants and automating properties for less than a dollar a day.</p>
-    </div>
+
+    <nav>
+        <div class="logo">RentalPro.ai</div>
+        <div class="nav-buttons">
+            <a href="https://owner.rentalpro.ai" class="btn-portal btn-owner">Owner Login</a>
+            <a href="https://portal.rentalpro.ai" class="btn-portal btn-tenant">Tenant Login</a>
+        </div>
+    </nav>
+
+    <header>
+        <h1>The Intelligent Rental Operating System</h1>
+        <p>Matching premium Texas listings with verified tenants and automating properties completely for less than a dollar a day.</p>
+        
+        <div class="search-container">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="zipInput" placeholder="Search ZIP code (e.g., 75078, 75070)...">
+            <button onclick="handleSearch()">Search</button>
+        </div>
+    </header>
+
+    <section class="features">
+        <h2 class="section-title">Platform Modules</h2>
+        <div class="grid">
+            
+            <div class="card">
+                <span class="card-icon">🌐</span>
+                <h3>Automated Syndication Loop</h3>
+                <p>Broadcast listings to top channels instantly with intelligent AI auto-responders that capture and nurture incoming tenant leads immediately.</p>
+            </div>
+
+            <div class="card">
+                <span class="card-icon">🔒</span>
+                <h3>Self-Showing Access Control</h3>
+                <p>Autonomous identity verification filters leads securely, allowing approved applicants to tour single-family vacancies on their own schedule via dynamic hardware smart keys.</p>
+            </div>
+
+            <div class="card">
+                <span class="card-icon">📊</span>
+                <h3>Unified Tenant Ledger</h3>
+                <p>Centralized lease signatures, recurring digital payment gateways, and automated technical repair ticketing deployed seamlessly inside a dual admin console.</p>
+            </div>
+
+        </div>
+    </section>
+
+    <footer>
+        &copy; 2026 RentalPro.ai. All rights reserved. Building modern property infrastructure.
+    </footer>
+
+    <script>
+        function handleSearch() {
+            const zip = document.getElementById('zipInput').value.trim();
+            if(!zip) {
+                alert("Please input a local Texas ZIP code to continue.");
+                return;
+            }
+            // Seamlessly routes the payload token over to your tenant ecosystem endpoint
+            window.location.href = "https://portal.rentalpro.ai/search?zip=" + encodeURIComponent(zip);
+        }
+    </script>
 </body>
 </html>
